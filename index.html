@@ -8,6 +8,7 @@
   </head>
   <body>
 
+    <!-- floating panel for toggling directions, traffic, and showing/hiding/deleting markers -->
     <div id="floating-panel" class="floating-panel">
       <input type="button" value="Show Directions" onclick="toggleDirections()" id="toggle-directions">
       <input type="button" value="Show Traffic" onclick="toggleTrafficLayer()" id="toggle-traffic">
@@ -16,6 +17,7 @@
       <input type="button" value="Delete Markers" onclick="deleteMarkers()">
     </div>
 
+    <!-- places search box and associated radio buttons -->
     <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
 
     <div id="type-selector" class="controls">
@@ -29,6 +31,7 @@
       <label for="changetype-address">Addresses</label>
     </div>
 
+    <!-- directions origin and destination search boxes and associated radio buttons -->
     <input id="origin-input" class="controls" type="text" placeholder="Enter an origin">
     <input id="destination-input" class="controls" type="text" placeholder="Enter a destination">
 
@@ -43,8 +46,10 @@
       <label for="changemode-driving">Driving</label>
     </div>
 
+    <!-- div to hold google map -->
     <div id="map" class="map"></div>
 
+    <!-- panel to display directions -->
     <div id="right-panel" class="hide">
       <p>Total Distance: <span id="total"></span></p>
     </div>

@@ -13,25 +13,30 @@ function initMap() {
   var destination_place_id = null;
   var travel_mode = google.maps.TravelMode.DRIVING;
 
-  //var atlantaLatlng = new google.maps.LatLng(33.749, -84.388);
+  /* lat and lng coordinates for Atlanta & ATV. These two will be initially displayed */
   var atlantaLatlng = {lat: 33.749, lng: -84.388};
   var atvLatlng = {lat: 33.773887, lng: -84.402853};
 
+  /* initialize map. set center on Atlanta */
   map = new google.maps.Map(document.getElementById('map'), {
     center: atlantaLatlng,
     zoom: 11,
     streetViewControl: true
   });
 
+  /* add markers for Atlanta & ATV */
   addMarker(atlantaLatlng, map, 'Atlanta');
   addMarker(atvLatlng, map, 'ATV');
 
-  //add a marker when the user clicks on the map
+  /* add a marker when the user clicks on the map */
   google.maps.event.addListener(map, 'click', function(event) {
     addMakerOnClick(event.latLng, map);
   });
 
   /*
+  Leaving this code in for future reference
+  ------------------------------------------
+
   var infowindow = new google.maps.InfoWindow();
   //add places service
   var service = new google.maps.places.PlacesService(map);
@@ -66,21 +71,27 @@ function initMap() {
   */
 
 
-  //places autocomplete
+  /* places autocomplete */
   var input = /** @type {!HTMLInputElement} */ (document.getElementById('pac-input'));
   var types = document.getElementById('type-selector');
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 
   var autocomplete = new google.maps.places.Autocomplete(input);
+  //bind autocomplete results to map
   autocomplete.bindTo('bounds', map);
 
+  /* places info window and marker */
   var placesInfoWindow = new google.maps.InfoWindow();
   var placesMarker = new google.maps.Marker({
     map: map,
     anchorPoint: new google.maps.Point(0, -29)
   });
 
+  /*
+    when search box changes, hide previous marker
+    and display new marker
+  */
   autocomplete.addListener('place_changed', function() {
     placesInfoWindow.close();
     placesMarker.setVisible(false);
@@ -90,7 +101,7 @@ function initMap() {
       return;
     }
 
-    // If the place has a geometry, present it on the map
+    /* If the place has a geometry, present it on the map */
     if (place.geometry.viewport) {
       map.fitBounds(place.geometry.viewport);
     } else {
@@ -116,15 +127,16 @@ function initMap() {
       ].join(' ');
     }
 
+    /* reveal places info window */
     placesInfoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     placesInfoWindow.open(map, placesMarker);
 
-    //if directions were showing at the time of a places search, hide directions
+    /* if directions were showing at the time of a places search, hide directions */
     showDirections = false;
     toggleDirections();
   });
 
-  //Set a listener on the radio button to change the filter type
+  /* Set a listener on the radio button to change the filter type */
   function setupClickListener(id, types) {
     var radioButton = document.getElementById(id);
     radioButton.addEventListener('click', function() {
@@ -132,10 +144,12 @@ function initMap() {
     });
   }
 
+  /* setup listeners for places search type radio buttons */
   setupClickListener('changetype-all', []);
   setupClickListener('changetype-address', ['address']);
   setupClickListener('changetype-establishment', ['establishment']);
 
+  /* initially display traffic layer */
   trafficLayer = new google.maps.TrafficLayer();
   toggleTrafficLayer();
 
@@ -155,12 +169,13 @@ function initMap() {
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
   map.controls[google.maps.ControlPosition.TOP_LEFT].push(modes);
 
+  /* bind origin and destination autocomplete */
   var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
   origin_autocomplete.bindTo('bounds', map);
   var destination_autocomplete = new google.maps.places.Autocomplete(destination_input);
   destination_autocomplete.bindTo('bounds', map);
 
-  // Sets a listener on a radio button to change the filter type on Places Autocomplete.
+  /* Sets a listener on a radio button to change the filter type on Places Autocomplete. */
   function setupDirectionsClickListener(id, mode) {
     var radioButton = document.getElementById(id);
     radioButton.addEventListener('click', function() {
@@ -168,6 +183,7 @@ function initMap() {
       route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay);
     });
   }
+  /* setup listeners for changing direction modes */
   setupDirectionsClickListener('changemode-walking', google.maps.TravelMode.WALKING);
   setupDirectionsClickListener('changemode-transit', google.maps.TravelMode.TRANSIT);
   setupDirectionsClickListener('changemode-driving', google.maps.TravelMode.DRIVING);
@@ -181,6 +197,7 @@ function initMap() {
     }
   }
 
+  /* whenever origin changes, autocomplete */
   origin_autocomplete.addListener('place_changed', function() {
     var place = origin_autocomplete.getPlace();
     if (!place.geometry) {
@@ -195,6 +212,7 @@ function initMap() {
     route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay);
   });
 
+  /* whenever destination changes, autocomplete */
   destination_autocomplete.addListener('place_changed', function() {
     var place = destination_autocomplete.getPlace();
     if (!place.geometry) {
@@ -209,6 +227,7 @@ function initMap() {
     route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay);
   });
 
+  /* find directions and display */
   function route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay) {
     if (!origin_place_id || !destination_place_id) {
       return;
@@ -229,40 +248,10 @@ function initMap() {
   }
 
 
-  // directionsDisplay.addListener('directions_changed', function() {
-  //   computeTotalDistance(directionsDisplay.getDirections());
-  // });
-
-  //displayRoute('Atlanta, GA', 'Dunwoody, GA', directionsService, directionsDisplay);
 
 } // end initMap function
 
-// function displayRoute(origin, destination, service, display) {
-//   service.route({
-//     origin: origin,
-//     destination: destination,
-//     waypoints: [], //what to put here?
-//     travelMode: google.maps.TravelMode.DRIVING,
-//     avoidTolls: false
-//   }, function(response, status) {
-//     if (status === google.maps.DirectionsStatus.OK) {
-//       display.setDirections(response);
-//     } else {
-//       alert('Could not display directions due to: ' + status);
-//     }
-//   });
-// }
-
-// function computeTotalDistance(result) {
-//   var total = 0;
-//   var myroute = result.routes[0];
-//   for (var i = 0; i < myroute.legs.length; i++) {
-//     total += myroute.legs[i].distance.value;
-//   }
-//   total = total / 1000;
-//   document.getElementById('total').innerHTML = total + ' mi';
-// }
-
+/* function to toggle the traffic layer and set button values appropriately */
 function toggleTrafficLayer() {
   var trafficButton = document.getElementById('toggle-traffic');
   if (traffic === true) {
@@ -277,10 +266,8 @@ function toggleTrafficLayer() {
   }
 }
 
-
-
+/* add a marker to the map @ the point the user clicks */
 function addMakerOnClick(location, map) {
-
   var marker = new google.maps.Marker({
     position: location,
     label: labels[labelIndex++ % labels.length],
@@ -289,11 +276,10 @@ function addMakerOnClick(location, map) {
     draggable: true
   });
   markers.push(marker);
-
 }
 
+/* function to add two initial markers: Atlanta & ATV */
 function addMarker(location, map, title) {
-
   var marker = new google.maps.Marker({
     position: location,
     animation: google.maps.Animation.DROP,
@@ -308,9 +294,9 @@ function addMarker(location, map, title) {
     var atlantaContentString = '<div id="content">Atlanta is the capital of and the most populous city in the U.S. state of Georgia, with an estimated 2013 population of 447,841.[6] Atlanta is the cultural and economic center of the Atlanta metropolitan area, home to 5,522,942 people and the ninth largest metropolitan area in the United States.[7] Atlanta is the county seat of Fulton County, and a small portion of the city extends eastward into DeKalb County.</div>';
     setInfoWindow(map, marker, atlantaContentString);
   }
-
 }
 
+/* function to set info windows */
 function setInfoWindow(map, marker, content) {
   var infowindow = new google.maps.InfoWindow({
     content: content
@@ -320,29 +306,30 @@ function setInfoWindow(map, marker, content) {
   });
 }
 
-// Sets the map on all markers in the markers array
+/* Sets the map on all markers in the markers array */
 function setMapOnAll(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
 
-// Removes the markers from the map, but keeps them in the array
+/* Removes the markers from the map, but keeps them in the array */
 function clearMarkers() {
   setMapOnAll(null);
 }
 
-// Shows any markers in the markers array
+/* Shows any markers in the markers array */
 function showMarkers() {
   setMapOnAll(map);
 }
 
-// Deletes all markers in the markers array by removing references to them
+/* Deletes all markers in the markers array by removing references to them */
 function deleteMarkers() {
   clearMarkers();
   markers = [];
 }
 
+/* function to toggle direction panel */
 function toggleDirections() {
   var rightPanel = document.getElementById('right-panel');
   var directionsButton = document.getElementById('toggle-directions');
