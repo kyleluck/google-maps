@@ -12,7 +12,7 @@ html, body {
 
 .floating-panel {
   position: absolute;
-  top: 125px;
+  top: 12px;
   width: 130px;
   right: 79%;
   z-index: 5;
@@ -36,7 +36,7 @@ html, body {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
-#pac-input {
+/*#pac-input {
   background-color: #fff;
   font-family: Roboto;
   font-size: 15px;
@@ -65,7 +65,7 @@ html, body {
   font-family: Roboto;
   font-size: 13px;
   font-weight: 300;
-}
+}*/
 
 #right-panel {
   font-family: 'Roboto','sans-serif';
@@ -120,24 +120,4 @@ html, body {
   font-family: Roboto;
   font-size: 13px;
   font-weight: 300;
-}
-
-#origin-input.controls {
-  z-index: 5;
-  position: absolute;
-  left: 113px !important;
-  top: 60px !important;
-}
-#destination-input.controls {
-  z-index: 5;
-  position: absolute;
-  left: 315px !important;
-  top: 60px !important;
-}
-
-#mode-selector.controls {
-  z-index: 5;
-  position: absolute;
-  left: 515px !important;
-  top: 60px !important;
 }
