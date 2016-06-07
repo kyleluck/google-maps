@@ -2,18 +2,21 @@
 <html>
   <head>
     <title>Simple Map</title>
-    <meta name="viewport" content="initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+
     <div id="floating-panel" class="floating-panel">
       <input type="button" value="Show Traffic" onclick="toggleTrafficLayer()" id="toggle-traffic">
       <input type="button" value="Hide Markers" onclick="clearMarkers()">
       <input type="button" value="Show All Markers" onclick="showMarkers()">
       <input type="button" value="Delete Markers" onclick="deleteMarkers()">
     </div>
+
     <input id="pac-input" class="controls" type="text" placeholder="Enter a location">
+
     <div id="type-selector" class="controls">
       <input type="radio" name="type" id="changetype-all" checked="checked">
       <label for="changetype-all">All</label>
@@ -24,7 +27,13 @@
       <input type="radio" name="type" id="changetype-address">
       <label for="changetype-address">Addresses</label>
     </div>
+
     <div id="map" class="map"></div>
+
+    <div id="right-panel">
+      <p>Total Distance: <span id="total"></span></p>
+    </div>
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5R-SL0sa3h31vPenaEd1meNL4u0gq67s&libraries=places&callback=initMap" async defer></script>
     <script src="script.js"></script>
   </body>
