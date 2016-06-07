@@ -25,6 +25,7 @@ function initMap() {
     addMakerOnClick(event.latLng, map);
   });
 
+  /*
   var infowindow = new google.maps.InfoWindow();
   //add places service
   var service = new google.maps.places.PlacesService(map);
@@ -33,6 +34,31 @@ function initMap() {
     radius: 500,
     type: ['store']
   }, serviceCallback);
+
+  //callback function for Places service
+  function serviceCallback(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      for (var i = 0; i < results.length; i++) {
+        createMarker(results[i]);
+      }
+    }
+  }
+
+  //create a marker for each Places service result
+  function createMarker(place) {
+    var placeLoc = place.geometry.location;
+    var marker = new google.maps.Marker({
+      map: map,
+      position: placeLoc
+    });
+
+    google.maps.event.addListener(marker, 'click', function() {
+      infowindow.setContent(place.name);
+      infowindow.open(map, this);
+    });
+  }
+  */
+
 
   //places autocomplete
   var input = /** @type {!HTMLInputElement} */ (document.getElementById('pac-input'));
@@ -119,28 +145,7 @@ function toggleTrafficLayer() {
   }
 }
 
-//callback function for Places service
-function serviceCallback(results, status) {
-  if (status === google.maps.places.PlacesServiceStatus.OK) {
-    for (var i = 0; i < results.length; i++) {
-      createMarker(results[i]);
-    }
-  }
-}
 
-//create a marker for each Places service result
-function createMarker(place) {
-  var placeLoc = place.geometry.location;
-  var marker = new google.maps.Marker({
-    map: map,
-    position: placeLoc
-  });
-
-  google.maps.event.addListener(marker, 'click', function() {
-    infowindow.setContent(place.name);
-    infowindow.open(map, this);
-  });
-}
 
 function addMakerOnClick(location, map) {
 
