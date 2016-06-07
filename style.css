@@ -3,10 +3,10 @@ html, body {
   margin: 0;
   padding: 0;
 }
-#map {
+.map {
   height: 100%;
 }
-#floating-panel {
+.floating-panel {
   position: absolute;
   top: 10px;
   left: 25%;
