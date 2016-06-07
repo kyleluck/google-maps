@@ -118,6 +118,10 @@ function initMap() {
 
     placesInfoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
     placesInfoWindow.open(map, placesMarker);
+
+    //if directions were showing at the time of a places search, hide directions
+    showDirections = false;
+    toggleDirections();
   });
 
   //Set a listener on the radio button to change the filter type
