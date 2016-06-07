@@ -12,8 +12,9 @@ html, body {
 
 .floating-panel {
   position: absolute;
-  top: 50px;
-  right: 69%;
+  top: 125px;
+  width: 130px;
+  right: 79%;
   z-index: 5;
   background-color: #fff;
   padding: 5px;
@@ -86,6 +87,57 @@ html, body {
 #right-panel i {
   font-size: 12px;
 }
+
 .hide {
   visibility: hidden;
+}
+
+#origin-input,
+#destination-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 200px;
+}
+
+#origin-input:focus,
+#destination-input:focus {
+  border-color: #4d90fe;
+}
+
+#mode-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  margin-left: 12px;
+  padding: 5px 11px 0px 11px;
+}
+
+#mode-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+#origin-input.controls {
+  z-index: 5;
+  position: absolute;
+  left: 113px !important;
+  top: 60px !important;
+}
+#destination-input.controls {
+  z-index: 5;
+  position: absolute;
+  left: 315px !important;
+  top: 60px !important;
+}
+
+#mode-selector.controls {
+  z-index: 5;
+  position: absolute;
+  left: 515px !important;
+  top: 60px !important;
 }
