@@ -216,6 +216,8 @@ function initMap() {
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);
+        showDirections = true;
+        toggleDirections();
       } else {
         window.alert('Directions request failed due to ' + status);
       }
@@ -231,31 +233,31 @@ function initMap() {
 
 } // end initMap function
 
-function displayRoute(origin, destination, service, display) {
-  service.route({
-    origin: origin,
-    destination: destination,
-    waypoints: [], //what to put here?
-    travelMode: google.maps.TravelMode.DRIVING,
-    avoidTolls: false
-  }, function(response, status) {
-    if (status === google.maps.DirectionsStatus.OK) {
-      display.setDirections(response);
-    } else {
-      alert('Could not display directions due to: ' + status);
-    }
-  });
-}
+// function displayRoute(origin, destination, service, display) {
+//   service.route({
+//     origin: origin,
+//     destination: destination,
+//     waypoints: [], //what to put here?
+//     travelMode: google.maps.TravelMode.DRIVING,
+//     avoidTolls: false
+//   }, function(response, status) {
+//     if (status === google.maps.DirectionsStatus.OK) {
+//       display.setDirections(response);
+//     } else {
+//       alert('Could not display directions due to: ' + status);
+//     }
+//   });
+// }
 
-function computeTotalDistance(result) {
-  var total = 0;
-  var myroute = result.routes[0];
-  for (var i = 0; i < myroute.legs.length; i++) {
-    total += myroute.legs[i].distance.value;
-  }
-  total = total / 1000;
-  document.getElementById('total').innerHTML = total + ' mi';
-}
+// function computeTotalDistance(result) {
+//   var total = 0;
+//   var myroute = result.routes[0];
+//   for (var i = 0; i < myroute.legs.length; i++) {
+//     total += myroute.legs[i].distance.value;
+//   }
+//   total = total / 1000;
+//   document.getElementById('total').innerHTML = total + ' mi';
+// }
 
 function toggleTrafficLayer() {
   var trafficButton = document.getElementById('toggle-traffic');
