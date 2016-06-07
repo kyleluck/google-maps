@@ -2,6 +2,8 @@ var map;
 var labels = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 var labelIndex = 0;
 var markers = [];
+var traffic = true;
+var trafficLayer;
 
 function initMap() {
 
@@ -97,6 +99,24 @@ function initMap() {
   setupClickListener('changetype-all', []);
   setupClickListener('changetype-address', ['address']);
   setupClickListener('changetype-establishment', ['establishment']);
+
+  trafficLayer = new google.maps.TrafficLayer();
+  toggleTrafficLayer();
+
+}
+
+function toggleTrafficLayer() {
+  var trafficButton = document.getElementById('toggle-traffic');
+  if (traffic === true) {
+    //add traffic layer
+    trafficLayer.setMap(map);
+    traffic = false;
+    trafficButton.setAttribute('value', 'Hide Traffic');
+  } else {
+    trafficLayer.setMap(null);
+    traffic = true;
+    trafficButton.setAttribute('value', 'Show Traffic');
+  }
 }
 
 //callback function for Places service
