@@ -9,6 +9,7 @@
   <body>
 
     <div id="floating-panel" class="floating-panel">
+      <input type="button" value="Show Directions" onclick="toggleDirections()" id="toggle-directions">
       <input type="button" value="Show Traffic" onclick="toggleTrafficLayer()" id="toggle-traffic">
       <input type="button" value="Hide Markers" onclick="clearMarkers()">
       <input type="button" value="Show All Markers" onclick="showMarkers()">
@@ -30,7 +31,7 @@
 
     <div id="map" class="map"></div>
 
-    <div id="right-panel">
+    <div id="right-panel" class="hide">
       <p>Total Distance: <span id="total"></span></p>
     </div>
 

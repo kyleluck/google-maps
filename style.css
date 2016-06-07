@@ -7,13 +7,13 @@ html, body {
 .map {
   height: 100%;
   float: left;
-  width: 63%;
+  width: 100%;
 }
 
 .floating-panel {
   position: absolute;
-  top: 10px;
-  left: 65%;
+  top: 50px;
+  right: 69%;
   z-index: 5;
   background-color: #fff;
   padding: 5px;
@@ -85,4 +85,7 @@ html, body {
 
 #right-panel i {
   font-size: 12px;
+}
+.hide {
+  visibility: hidden;
 }

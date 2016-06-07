@@ -4,6 +4,7 @@ var labelIndex = 0;
 var markers = [];
 var traffic = true;
 var trafficLayer;
+var showDirections = true;
 
 function initMap() {
 
@@ -249,4 +250,23 @@ function showMarkers() {
 function deleteMarkers() {
   clearMarkers();
   markers = [];
+}
+
+function toggleDirections() {
+  var rightPanel = document.getElementById('right-panel');
+  var directionsButton = document.getElementById('toggle-directions');
+  var map = document.getElementById('map');
+
+  if (showDirections) {
+    rightPanel.className = '';
+    showDirections = false;
+    directionsButton.setAttribute('value', 'Hide Directions');
+    map.style.width = "63%";
+  } else {
+    rightPanel.className = 'hide';
+    showDirections = true;
+    directionsButton.setAttribute('value', 'Show Directions');
+    map.style.width = "100%";
+    google.maps.event.trigger(map, 'resize');
+  }
 }
