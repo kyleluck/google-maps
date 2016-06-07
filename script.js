@@ -161,6 +161,7 @@ function initMap() {
     var radioButton = document.getElementById(id);
     radioButton.addEventListener('click', function() {
       travel_mode = mode;
+      route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay);
     });
   }
   setupDirectionsClickListener('changemode-walking', google.maps.TravelMode.WALKING);
@@ -201,8 +202,7 @@ function initMap() {
     // If the place has a geometry, store its place ID and route if we have
     // the other place ID
     destination_place_id = place.place_id;
-    route(origin_place_id, destination_place_id, travel_mode,
-          directionsService, directionsDisplay);
+    route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay);
   });
 
   function route(origin_place_id, destination_place_id, travel_mode, directionsService, directionsDisplay) {
