@@ -10,6 +10,15 @@ html, body {
   width: 100%;
 }
 
+/*
+for street view panorama
+-----------------------
+#map, #pano {
+  float: left;
+  height: 100%;
+  width: 45%;
+}*/
+
 .floating-panel {
   position: absolute;
   top: 12px;

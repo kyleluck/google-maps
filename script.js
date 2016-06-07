@@ -169,7 +169,19 @@ function initMap() {
     });
   }
 
-
+  /*
+  Street View Panorama :
+  -----------------------
+  var panorama = new google.maps.StreetViewPanorama(
+    document.getElementById('pano'), {
+      position: atlantaLatlng,
+      pov: {
+        heading: 34,
+        pitch: 10
+      }
+    });
+  map.setStreetView(panorama);
+  */
 
 } // end initMap function
 
