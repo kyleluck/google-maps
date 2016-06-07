@@ -47,6 +47,23 @@ function addMarker(location, map, title) {
     title: title
   });
 
+  if (title === 'ATV') {
+    var atvContentString = '<div id="content">Atlanta Tech Village is home to some of the brightest and most talented companies in the world. Surround yourself with like minded individuals looking to make a dent in the universe.</div>';
+    setInfoWindow(map, marker, atvContentString);
+  } else if (title === 'Atlanta') {
+    var atlantaContentString = '<div id="content">Atlanta is the capital of and the most populous city in the U.S. state of Georgia, with an estimated 2013 population of 447,841.[6] Atlanta is the cultural and economic center of the Atlanta metropolitan area, home to 5,522,942 people and the ninth largest metropolitan area in the United States.[7] Atlanta is the county seat of Fulton County, and a small portion of the city extends eastward into DeKalb County.</div>';
+    setInfoWindow(map, marker, atlantaContentString);
+  }
+
+}
+
+function setInfoWindow(map, marker, content) {
+  var infowindow = new google.maps.InfoWindow({
+    content: content
+  });
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
 }
 
 // Sets the map on all markers in the markers array
