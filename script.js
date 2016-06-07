@@ -23,7 +23,7 @@ function initMap() {
     addMakerOnClick(event.latLng, map);
   });
 
-  infowindow = new google.maps.InfoWindow();
+  var infowindow = new google.maps.InfoWindow();
   //add places service
   var service = new google.maps.places.PlacesService(map);
   service.nearbySearch({
@@ -32,6 +32,71 @@ function initMap() {
     type: ['store']
   }, serviceCallback);
 
+  //places autocomplete
+  var input = /** @type {!HTMLInputElement} */ (document.getElementById('pac-input'));
+  var types = document.getElementById('type-selector');
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  var placesInfoWindow = new google.maps.InfoWindow();
+  var placesMarker = new google.maps.Marker({
+    map: map,
+    anchorPoint: new google.maps.Point(0, -29)
+  });
+
+  autocomplete.addListener('place_changed', function() {
+    placesInfoWindow.close();
+    placesMarker.setVisible(false);
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      console.log("Autocomplete's returned place contains no geometry");
+      return;
+    }
+
+    // If the place has a geometry, present it on the map
+    if (place.geometry.viewport) {
+      map.fitBounds(place.geometry.viewport);
+    } else {
+      map.setCenter(place.geometry.location);
+      map.setZoom(17);
+    }
+    placesMarker.setIcon(/** @type {google.maps.Icon} */({
+      url: place.icon,
+      size: new google.maps.Size(71, 71),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(35, 35)
+    }));
+    placesMarker.setPosition(place.geometry.location);
+    placesMarker.setVisible(true);
+
+    var address = '';
+    if (place.address_components) {
+      address = [
+        (place.address_components[0] && place.address_components[0].short_name || ''),
+        (place.address_components[1] && place.address_components[1].short_name || ''),
+        (place.address_components[2] && place.address_components[2].short_name || '')
+      ].join(' ');
+    }
+
+    placesInfoWindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
+    placesInfoWindow.open(map, placesMarker);
+  });
+
+  //Set a listener on the radio button to change the filter type
+  function setupClickListener(id, types) {
+    var radioButton = document.getElementById(id);
+    radioButton.addEventListener('click', function() {
+      autocomplete.setTypes(types);
+    });
+  }
+
+  setupClickListener('changetype-all', []);
+  setupClickListener('changetype-address', ['address']);
+  setupClickListener('changetype-establishment', ['establishment']);
 }
 
 //callback function for Places service
